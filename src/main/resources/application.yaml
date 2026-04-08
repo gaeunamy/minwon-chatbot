@@ -4,3 +4,19 @@ spring:
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
+  datasource:
+    url: jdbc:mysql://localhost:3306/minwon_chatbot?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 8080
