@@ -42,7 +42,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('error')) {
         document.getElementById('errorMsg').style.display = 'block';
+        document.querySelector('input[name="username"]').value = urlParams.get('username') || '';
         document.querySelector('input[name="password"]').value = '';
+        document.querySelector('input[name="password"]').focus();
     }
 </script>
 

@@ -27,7 +27,10 @@ public class SecurityConfig {
                         .loginPage("/login.html")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/admin.html", true)
-                        .failureUrl("/login.html?error=true")
+                        .failureHandler((request, response, exception) -> {
+                            String username = request.getParameter("username");
+                            response.sendRedirect("/login.html?error=true&username=" + username);
+                        })
                         .permitAll()
                 )
                 .logout(logout -> logout
