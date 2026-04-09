@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -21,6 +22,18 @@ public class ChatService {
     private final FaqRepository faqRepository;
     private final ChatLogRepository chatLogRepository;
     private final OpenAiChatClient openAiChatClient;
+
+    // 유의어 사전
+    private static final Map<String, String> SYNONYMS = new HashMap<>(Map.of(
+            "잃어버리", "분실",
+            "없어지", "분실",
+            "없어졌", "분실",
+            "재발급", "발급",
+            "처음", "신규",
+            "새로", "신규",
+            "방문", "신청",
+            "어떻게", "방법"
+    ));
 
     public ChatDto chat(String question) {
 
@@ -39,14 +52,20 @@ public class ChatService {
                 .distinct()
                 .toList();
 
-        // 2. 키워드로 FAQ 검색 및 점수 계산
+        // 2. 유의어 치환
+        keywords = keywords.stream()
+                .map(word -> SYNONYMS.getOrDefault(word, word))
+                .distinct()
+                .toList();
+
+        // 3. 키워드로 FAQ 검색 및 점수 계산
         Map<Faq, Long> scoreMap = keywords.stream()
                 .flatMap(keyword -> faqRepository.findByQuestionContaining(keyword).stream())
                 .collect(Collectors.groupingBy(faq -> faq, Collectors.counting()));
 
         String answer;
 
-        // 3. 가장 높은 점수의 FAQ 선택
+        // 4. 가장 높은 점수의 FAQ 선택
         Optional<Map.Entry<Faq, Long>> bestMatch = scoreMap.entrySet().stream()
                 .max(Map.Entry.comparingByValue());
 
@@ -54,31 +73,31 @@ public class ChatService {
             double matchRatio = (double) bestMatch.get().getValue() / keywords.size();
 
             if (matchRatio >= 0.8) {
-                // 4. 일치 비율 50% 이상이면 FAQ 답변 반환
+                // 5. 일치 비율 80% 이상이면 FAQ 답변 반환
                 answer = bestMatch.get().getKey().getAnswer();
             } else {
-                // 5. 50% 미만이면 OpenAI 호출
-                answer = callOpenAI(question);
+                // 6. 80% 미만이면 OpenAI 호출
+                answer = callOpenAI(question, keywords);
             }
         } else {
-            // 6. FAQ 없으면 OpenAI 호출
-            answer = callOpenAI(question);
+            // 7. FAQ 없으면 OpenAI 호출
+            answer = callOpenAI(question, keywords);
         }
 
-        // 7. 대화 로그 저장
+        // 8. 대화 로그 저장
         ChatLog chatLog = new ChatLog();
         chatLog.setQuestion(question);
         chatLog.setAnswer(answer);
         chatLogRepository.save(chatLog);
 
-        // 8. 결과 반환
+        // 9. 결과 반환
         ChatDto chatDto = new ChatDto();
         chatDto.setQuestion(question);
         chatDto.setAnswer(answer);
         return chatDto;
     }
 
-    private String callOpenAI(String question) {
+    private String callOpenAI(String question, List<String> keywords) {
         String answer = openAiChatClient.call(
                 "당신은 대한민국 공공기관 민원 안내 챗봇입니다.\n" +
                         "다음 규칙을 반드시 따르세요.\n" +
@@ -89,9 +108,9 @@ public class ChatService {
                         "질문: " + question
         );
 
-        // OpenAI 답변 FAQ DB에 자동 저장
+        // OpenAI 답변 FAQ DB에 키워드로 저장
         Faq newFaq = new Faq();
-        newFaq.setQuestion(question);
+        newFaq.setQuestion(String.join(" ", keywords));
         newFaq.setAnswer(answer);
         faqRepository.save(newFaq);
 
