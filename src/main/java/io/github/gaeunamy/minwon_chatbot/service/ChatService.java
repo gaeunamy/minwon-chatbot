@@ -60,7 +60,9 @@ public class ChatService {
 
         // 3. 키워드로 FAQ 검색 및 점수 계산
         Map<Faq, Long> scoreMap = keywords.stream()
-                .flatMap(keyword -> faqRepository.findByQuestionContaining(keyword).stream())
+                .flatMap(keyword -> faqRepository
+                        .findByQuestionContainingAndStatus(keyword, Faq.FaqStatus.APPROVED)
+                        .stream())
                 .collect(Collectors.groupingBy(faq -> faq, Collectors.counting()));
 
         String answer;
@@ -112,6 +114,7 @@ public class ChatService {
         Faq newFaq = new Faq();
         newFaq.setQuestion(String.join(" ", keywords));
         newFaq.setAnswer(answer);
+        newFaq.setStatus(Faq.FaqStatus.PENDING);
         faqRepository.save(newFaq);
 
         return answer;

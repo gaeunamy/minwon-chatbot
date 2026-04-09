@@ -37,4 +37,22 @@ public class FaqController {
     public void deleteFaq(@PathVariable Long id) {
         faqService.deleteFaq(id);
     }
+
+    // PENDING 목록 조회
+    @GetMapping("/pending")
+    public List<FaqDto> getPendingFaqs() {
+        return faqService.getPendingFaqs();
+    }
+
+    // 승인
+    @PutMapping("/{id}/approve")
+    public FaqDto approveFaq(@PathVariable Long id) {
+        return faqService.approveFaq(id);
+    }
+
+    // 거절
+    @DeleteMapping("/{id}/reject")
+    public void rejectFaq(@PathVariable Long id) {
+        faqService.rejectFaq(id);
+    }
 }

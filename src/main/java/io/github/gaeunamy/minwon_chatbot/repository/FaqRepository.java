@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface FaqRepository extends JpaRepository<Faq, Long> {
     List<Faq> findByQuestionContaining(String keyword);
+
+    List<Faq> findByQuestionContainingAndStatus(String keyword, Faq.FaqStatus status);
+    List<Faq> findByStatus(Faq.FaqStatus status);
 }

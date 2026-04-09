@@ -17,7 +17,7 @@ public class FaqService {
 
     // 전체 조회
     public List<FaqDto> getAllFaqs() {
-        return faqRepository.findAll().stream()
+        return faqRepository.findByStatus(Faq.FaqStatus.APPROVED).stream()
                 .map(this::toDto)
                 .collect(Collectors.toList());
     }
@@ -57,6 +57,27 @@ public class FaqService {
         dto.setId(faq.getId());
         dto.setQuestion(faq.getQuestion());
         dto.setAnswer(faq.getAnswer());
+        dto.setStatus(faq.getStatus());
         return dto;
+    }
+
+    // PENDING 목록 조회
+    public List<FaqDto> getPendingFaqs() {
+        return faqRepository.findByStatus(Faq.FaqStatus.PENDING).stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    // 승인
+    public FaqDto approveFaq(Long id) {
+        Faq faq = faqRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("FAQ를 찾을 수 없습니다."));
+        faq.setStatus(Faq.FaqStatus.APPROVED);
+        return toDto(faqRepository.save(faq));
+    }
+
+    // 거절 (삭제)
+    public void rejectFaq(Long id) {
+        faqRepository.deleteById(id);
     }
 }

@@ -27,8 +27,16 @@ public class Faq {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private FaqStatus status = FaqStatus.APPROVED;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();
+    }
+
+    public enum FaqStatus {
+        APPROVED, PENDING
     }
 }
