@@ -1,12 +1,13 @@
+/* 페이지 제목 */
 .page-title {
     font-size: 20px;
-    color: #003087;
+    color: #1a2a44;
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #003087;
+    border-bottom: 2px solid #1a2a44;
 }
 
-/* FAQ 등록 폼 */
+/* FAQ 등록 양식 */
 .form-box {
     background: white;
     border: 1px solid #d0d8e4;
@@ -17,7 +18,7 @@
 
 .form-box h3 {
     font-size: 16px;
-    color: #003087;
+    color: #1a2a44;
     margin-bottom: 15px;
 }
 
@@ -30,6 +31,7 @@
     font-size: 14px;
     margin-bottom: 10px;
     outline: none;
+    transition: border-color 0.3s;
 }
 
 .form-box textarea {
@@ -39,24 +41,25 @@
 
 .form-box input:focus,
 .form-box textarea:focus {
-    border-color: #003087;
+    border-color: #1a2a44;
 }
 
 .form-box button {
     padding: 10px 25px;
-    background-color: #003087;
+    background-color: #1a2a44;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .form-box button:hover {
-    background-color: #004ab3;
+    background-color: #2c3e50;
 }
 
-/* FAQ 테이블 */
+/* FAQ 목록 테이블 */
 .faq-table {
     width: 100%;
     border-collapse: collapse;
@@ -67,7 +70,7 @@
 }
 
 .faq-table th {
-    background-color: #003087;
+    background-color: #1a2a44;
     color: white;
     padding: 12px 15px;
     font-size: 14px;
@@ -85,18 +88,20 @@
 }
 
 .faq-table tr:hover td {
-    background-color: #f0f4f8;
+    background-color: #f1f5f9;
+    color: #1a2a44;
 }
 
 .btn-edit {
     padding: 6px 12px;
-    background-color: #004ab3;
+    background-color: #475569;
     color: white;
     border: none;
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
     margin-right: 5px;
+    transition: background-color 0.3s;
 }
 
 .btn-delete {
@@ -107,16 +112,18 @@
     border-radius: 4px;
     font-size: 13px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .btn-edit:hover {
-    background-color: #003087;
+    background-color: #1a2a44;
 }
 
 .btn-delete:hover {
     background-color: #e74c3c;
 }
 
+/* 탭 전환 메뉴 */
 .tab-menu {
     display: flex;
     gap: 10px;
@@ -125,20 +132,22 @@
 
 .tab-btn {
     padding: 10px 25px;
-    background-color: #e8f0fb;
-    color: #003087;
-    border: 1px solid #003087;
+    background-color: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
-}
-
-.tab-btn.active {
-    background-color: #003087;
-    color: white;
+    transition: all 0.3s ease;
 }
 
 .tab-btn:hover {
-    background-color: #004ab3;
+    background-color: #e2e8f0;
+    color: #1a2a44;
+}
+
+.tab-btn.active {
+    background-color: #1a2a44;
     color: white;
+    border-color: #1a2a44;
 }

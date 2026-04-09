@@ -1,3 +1,4 @@
+/* 로그인 박스 */
 .login-box {
     background: white;
     border: 1px solid #d0d8e4;
@@ -8,14 +9,16 @@
     text-align: center;
 }
 
+/* 로그인 제목 */
 .login-box h2 {
     font-size: 20px;
-    color: #003087;
+    color: #1a2a44;
     margin-bottom: 25px;
     padding-bottom: 10px;
-    border-bottom: 2px solid #003087;
+    border-bottom: 2px solid #1a2a44;
 }
 
+/* 입력창 */
 .login-box input {
     width: 100%;
     padding: 12px 15px;
@@ -25,28 +28,32 @@
     margin-bottom: 12px;
     outline: none;
     box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
 .login-box input:focus {
-    border-color: #003087;
+    border-color: #1a2a44;
 }
 
+/* 로그인 버튼 */
 .login-box button {
     width: 100%;
     padding: 12px;
-    background-color: #003087;
+    background-color: #1a2a44;
     color: white;
     border: none;
     border-radius: 5px;
     font-size: 15px;
     cursor: pointer;
     margin-top: 5px;
+    transition: background-color 0.3s;
 }
 
 .login-box button:hover {
-    background-color: #004ab3;
+    background-color: #2c3e50;
 }
 
+/* 에러 메시지 */
 .login-box .error {
     color: #c0392b;
     font-size: 13px;

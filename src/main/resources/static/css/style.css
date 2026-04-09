@@ -43,6 +43,7 @@ header .subtitle {
 
 /* 관리자 링크/버튼 스타일 */
 .admin-link {
+    background: transparent;
     color: white;
     text-decoration: none;
     border: 1px solid rgba(255,255,255,0.3);
@@ -50,6 +51,9 @@ header .subtitle {
     border-radius: 20px;
     font-size: 12px;
     transition: 0.3s;
+    cursor: pointer;
+    outline: none;
+    display: inline-block;
 }
 
 .admin-link:hover {
