@@ -2,6 +2,7 @@ package io.github.gaeunamy.minwon_chatbot.service;
 
 import io.github.gaeunamy.minwon_chatbot.dto.FaqDto;
 import io.github.gaeunamy.minwon_chatbot.entity.Faq;
+import io.github.gaeunamy.minwon_chatbot.exception.ResourceNotFoundException; // 👇 추가된 import
 import io.github.gaeunamy.minwon_chatbot.repository.FaqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class FaqService {
     // 수정
     public FaqDto updateFaq(Long id, FaqDto faqDto) {
         Faq faq = faqRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("FAQ를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("FAQ를 찾을 수 없습니다.")); // 👇 커스텀 예외로 수정됨
         faq.setQuestion(faqDto.getQuestion());
         faq.setAnswer(faqDto.getAnswer());
         return toDto(faqRepository.save(faq));
@@ -71,7 +72,7 @@ public class FaqService {
     // 승인
     public FaqDto approveFaq(Long id) {
         Faq faq = faqRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("FAQ를 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFoundException("FAQ를 찾을 수 없습니다.")); // 👇 커스텀 예외로 수정됨
         faq.setStatus(Faq.FaqStatus.APPROVED);
         return toDto(faqRepository.save(faq));
     }
