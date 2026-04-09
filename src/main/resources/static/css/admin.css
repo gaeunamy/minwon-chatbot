@@ -1,0 +1,118 @@
+.page-title {
+    font-size: 20px;
+    color: #003087;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #003087;
+}
+
+/* FAQ 등록 폼 */
+.form-box {
+    background: white;
+    border: 1px solid #d0d8e4;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.form-box h3 {
+    font-size: 16px;
+    color: #003087;
+    margin-bottom: 15px;
+}
+
+.form-box input,
+.form-box textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #d0d8e4;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.form-box textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.form-box input:focus,
+.form-box textarea:focus {
+    border-color: #003087;
+}
+
+.form-box button {
+    padding: 10px 25px;
+    background-color: #003087;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.form-box button:hover {
+    background-color: #004ab3;
+}
+
+/* FAQ 테이블 */
+.faq-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border: 1px solid #d0d8e4;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.faq-table th {
+    background-color: #003087;
+    color: white;
+    padding: 12px 15px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.faq-table td {
+    padding: 12px 15px;
+    font-size: 14px;
+    border-bottom: 1px solid #d0d8e4;
+}
+
+.faq-table tr:last-child td {
+    border-bottom: none;
+}
+
+.faq-table tr:hover td {
+    background-color: #f0f4f8;
+}
+
+.btn-edit {
+    padding: 6px 12px;
+    background-color: #004ab3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn-delete {
+    padding: 6px 12px;
+    background-color: #c0392b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.btn-edit:hover {
+    background-color: #003087;
+}
+
+.btn-delete:hover {
+    background-color: #e74c3c;
+}
