@@ -23,8 +23,18 @@ public class ChatService {
     public ChatDto chat(String question) {
 
         // 1. 키워드 추출 (2글자 이상 단어만)
-        List<String> keywords = Arrays.stream(question.split("[\\s?!.,]+"))
+        kr.co.shineware.nlp.komoran.core.Komoran komoran =
+                new kr.co.shineware.nlp.komoran.core.Komoran(
+                        kr.co.shineware.nlp.komoran.constant.DEFAULT_MODEL.LIGHT
+                );
+
+        List<String> keywords = komoran.analyze(question)
+                .getTokenList()
+                .stream()
+                .filter(token -> token.getPos().startsWith("N") || token.getPos().startsWith("V"))
+                .map(kr.co.shineware.nlp.komoran.model.Token::getMorph)
                 .filter(word -> word.length() >= 2)
+                .distinct()
                 .toList();
 
         // 2. 키워드로 FAQ 검색

@@ -17,6 +17,7 @@ repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -41,6 +42,9 @@ dependencies {
 
 	// Test
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// 한국어 형태소 분석기
+	implementation 'com.github.shin285:KOMORAN:3.3.4'
 }
 
 tasks.named('test') {
