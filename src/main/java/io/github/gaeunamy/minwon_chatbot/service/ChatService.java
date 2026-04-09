@@ -2,11 +2,15 @@ package io.github.gaeunamy.minwon_chatbot.service;
 
 import io.github.gaeunamy.minwon_chatbot.dto.ChatDto;
 import io.github.gaeunamy.minwon_chatbot.entity.ChatLog;
+import io.github.gaeunamy.minwon_chatbot.entity.Faq;
 import io.github.gaeunamy.minwon_chatbot.repository.ChatLogRepository;
 import io.github.gaeunamy.minwon_chatbot.repository.FaqRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ai.openai.OpenAiChatClient;
 import org.springframework.stereotype.Service;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,28 +22,48 @@ public class ChatService {
 
     public ChatDto chat(String question) {
 
-        // 1. FAQ 검색
-        var faqs = faqRepository.findByQuestionContaining(question);
+        // 1. 키워드 추출 (2글자 이상 단어만)
+        List<String> keywords = Arrays.stream(question.split("[\\s?!.,]+"))
+                .filter(word -> word.length() >= 2)
+                .toList();
+
+        // 2. 키워드로 FAQ 검색
+        List<Faq> faqs = keywords.stream()
+                .flatMap(keyword -> faqRepository.findByQuestionContaining(keyword).stream())
+                .distinct()
+                .toList();
 
         String answer;
 
         if (!faqs.isEmpty()) {
-            // 2. FAQ에 있으면 FAQ 답변 반환
+            // 3. FAQ 있으면 첫 번째 답변 반환
             answer = faqs.get(0).getAnswer();
         } else {
-            // 3. FAQ에 없으면 OpenAI 호출
+            // 4. FAQ 없으면 OpenAI 호출
             answer = openAiChatClient.call(
-                    "당신은 공공기관 민원 안내 챗봇입니다. 다음 질문에 친절하게 답변해주세요.\n질문: " + question
+                    "당신은 대한민국 공공기관 민원 안내 챗봇입니다.\n" +
+                            "다음 규칙을 반드시 따르세요.\n" +
+                            "1. 답변은 3문장 이내로 작성하세요.\n" +
+                            "2. 존댓말을 사용하세요.\n" +
+                            "3. 민원 처리 절차와 필요 서류를 중심으로 안내하세요.\n" +
+                            "4. 모르는 내용은 '해당 기관에 문의하세요'라고 답하세요.\n" +
+                            "질문: " + question
             );
+
+            // 5. OpenAI 답변을 FAQ DB에 자동 저장
+            Faq newFaq = new Faq();
+            newFaq.setQuestion(question);
+            newFaq.setAnswer(answer);
+            faqRepository.save(newFaq);
         }
 
-        // 4. 대화 로그 저장
+        // 6. 대화 로그 저장
         ChatLog chatLog = new ChatLog();
         chatLog.setQuestion(question);
         chatLog.setAnswer(answer);
         chatLogRepository.save(chatLog);
 
-        // 5. 결과 반환
+        // 7. 결과 반환
         ChatDto chatDto = new ChatDto();
         chatDto.setQuestion(question);
         chatDto.setAnswer(answer);
