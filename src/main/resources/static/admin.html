@@ -24,27 +24,44 @@
 <div class="container">
     <h2 class="page-title">FAQ 관리</h2>
 
-    <!-- FAQ 등록 -->
-    <div class="form-box">
-        <h3>FAQ 등록</h3>
-        <input type="text" id="newQuestion" placeholder="질문 입력" />
-        <textarea id="newAnswer" placeholder="답변 입력"></textarea>
-        <button onclick="createFaq()">등록</button>
+    <div class="tab-menu">
+        <button class="tab-btn active" id="btnApproved" onclick="switchTab('approved')">FAQ 관리 (승인됨)</button>
+        <button class="tab-btn" id="btnPending" onclick="switchTab('pending')">AI 승인 대기열 <span id="pendingCount" style="color: red; font-weight: bold;"></span></button>
     </div>
 
-    <!-- FAQ 목록 -->
-    <table class="faq-table">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>질문</th>
-            <th>답변</th>
-            <th>관리</th>
-        </tr>
-        </thead>
-        <tbody id="faqList">
-        </tbody>
-    </table>
+    <div id="approvedTab">
+        <div class="form-box">
+            <h3>FAQ 등록</h3>
+            <input type="text" id="newQuestion" placeholder="질문 입력" />
+            <textarea id="newAnswer" placeholder="답변 입력"></textarea>
+            <button onclick="createFaq()">등록</button>
+        </div>
+        <table class="faq-table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>질문</th>
+                <th>답변</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody id="faqList"></tbody>
+        </table>
+    </div>
+
+    <div id="pendingTab" style="display:none;">
+        <table class="faq-table">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>AI 추출 키워드(질문)</th>
+                <th>AI 생성 답변</th>
+                <th>관리</th>
+            </tr>
+            </thead>
+            <tbody id="pendingList"></tbody>
+        </table>
+    </div>
 </div>
 
 <footer>

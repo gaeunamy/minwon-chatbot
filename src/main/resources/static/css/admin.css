@@ -116,3 +116,29 @@
 .btn-delete:hover {
     background-color: #e74c3c;
 }
+
+.tab-menu {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    background-color: #e8f0fb;
+    color: #003087;
+    border: 1px solid #003087;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background-color: #003087;
+    color: white;
+}
+
+.tab-btn:hover {
+    background-color: #004ab3;
+    color: white;
+}
