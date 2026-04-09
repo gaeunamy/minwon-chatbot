@@ -1,3 +1,5 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
 * {
     margin: 0;
     padding: 0;
@@ -5,146 +7,150 @@
 }
 
 body {
-    font-family: '맑은 고딕', sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
+    font-family: 'Pretendard', sans-serif;
+    background-color: #f4f7f9;
+    color: #2c3e50;
+    /* 스크롤바 유무에 따라 헤더 내용이 좌우로 움직이는 현상을 방지 */
+    overflow-y: scroll;
 }
 
-/* 헤더 */
+/* 헤더: 깊은 네이비와 Flexbox 적용 */
 header {
-    background-color: #003087;
+    background-color: #1a2a44;
     color: white;
-    padding: 15px 40px;
+    padding: 20px 0;
+}
+
+.header-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 15px;
 }
 
 header .logo {
-    font-size: 22px;
-    font-weight: bold;
-    letter-spacing: 1px;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
 }
 
 header .subtitle {
     font-size: 13px;
-    color: #aac4f0;
+    color: #94a3b8;
 }
 
-/* 네비게이션 */
+/* 관리자 링크/버튼 스타일 */
+.admin-link {
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.admin-link:hover {
+    background: white;
+    color: #1a2a44;
+}
+
+/* 네비게이션: 깔끔한 라인 형태 */
 nav {
-    background-color: #004ab3;
-    padding: 10px 40px;
+    background-color: white;
+    padding: 12px 0;
+    border-bottom: 1px solid #e2e8f0;
     display: flex;
-    gap: 30px;
+    justify-content: center;
+    gap: 40px;
 }
 
 nav a {
-    color: white;
+    color: #64748b;
     text-decoration: none;
     font-size: 14px;
+    font-weight: 600;
 }
 
-nav a:hover {
-    text-decoration: underline;
-}
+nav a:hover { color: #1a2a44; }
 
-/* 메인 컨테이너 */
+/* 메인 컨테이너: 상하 여백 조정 */
 .container {
     max-width: 900px;
-    margin: 40px auto;
+    margin: 30px auto; /* 여백을 살짝 줄여 화면 안에 더 잘 들어오게 함 */
     padding: 0 20px;
 }
 
-/* 채팅창 */
+/* 채팅창: 화면 높이에 따라 유연하게 조절 (잘림 방지 핵심) */
 .chat-box {
     background: white;
-    border: 1px solid #d0d8e4;
-    border-radius: 8px;
-    padding: 20px;
-    height: 500px;
-    overflow-y: auto;
-    margin-bottom: 15px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    padding: 25px;
+    /* 👇 브라우저 전체 높이(100vh)에서 헤더/푸터 공간을 뺀 만큼만 차지합니다. */
+    height: calc(100vh - 380px);
+    min-height: 400px; /* 화면이 너무 작아져도 최소한의 높이는 유지 */
+    border: none;
+    overflow-y: auto;  /* 대화 내용이 많아지면 내부 스크롤 생성 */
 }
 
-/* 메시지 */
-.message {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
-}
-
-.message.user {
-    align-items: flex-end;
-}
-
-.message.bot {
-    align-items: flex-start;
-}
-
+/* 말풍선 디자인 개선 */
 .message .bubble {
-    max-width: 70%;
-    padding: 10px 15px;
-    border-radius: 10px;
+    max-width: 80%;
+    padding: 12px 18px;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .message.user .bubble {
-    background-color: #003087;
+    background-color: #1a2a44;
     color: white;
+    border-radius: 18px 18px 2px 18px;
 }
 
 .message.bot .bubble {
-    background-color: #e8f0fb;
-    color: #333;
+    background-color: #f1f5f9;
+    color: #334155;
+    border-radius: 18px 18px 18px 2px;
 }
 
-.message .name {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 4px;
-}
-
-/* 입력창 */
+/* 입력 영역: 플로팅 스타일 */
 .input-area {
+    margin-top: 20px;
+    background: white;
+    padding: 8px;
+    border-radius: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     display: flex;
-    gap: 10px;
 }
 
 .input-area input {
+    border: none;
+    padding: 10px 20px;
     flex: 1;
-    padding: 12px 15px;
-    border: 1px solid #d0d8e4;
-    border-radius: 5px;
-    font-size: 14px;
     outline: none;
 }
 
-.input-area input:focus {
-    border-color: #003087;
-}
-
 .input-area button {
-    padding: 12px 25px;
-    background-color: #003087;
+    background-color: #1a2a44;
+    padding: 10px 25px;
+    border-radius: 25px;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 14px;
     cursor: pointer;
 }
 
-.input-area button:hover {
-    background-color: #004ab3;
+footer {
+    margin-top: 40px;
+    padding-bottom: 30px;
+    text-align: center;
 }
 
-/* 푸터 */
-footer {
-    text-align: center;
-    padding: 20px;
-    font-size: 12px;
-    color: #888;
-    margin-top: 40px;
-    border-top: 1px solid #d0d8e4;
+footer p {
+    font-size: 11px;
+    color: #94a3b8;
+    opacity: 0.8;
+    letter-spacing: -0.2px;
 }

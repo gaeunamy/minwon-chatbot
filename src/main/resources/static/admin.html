@@ -10,15 +10,20 @@
 <body>
 
 <header>
-    <div>
-        <div class="logo">🏛 민원안내 AI 챗봇</div>
-        <div class="subtitle">공공기관 민원 정보를 AI가 안내해 드립니다</div>
+    <div class="header-content">
+        <div>
+            <div class="logo">🏛 민원안내 AI 챗봇</div>
+            <div class="subtitle">관리자 전용 시스템</div>
+        </div>
+        <form action="/logout" method="post" style="margin:0;">
+            <button type="submit" class="admin-link" style="background:none; cursor:pointer;">로그아웃</button>
+        </form>
     </div>
 </header>
 
 <nav>
     <a href="index.html">민원 챗봇</a>
-    <a href="admin.html">관리자 페이지</a>
+    <a href="admin.html">FAQ 관리</a>
 </nav>
 
 <div class="container">
