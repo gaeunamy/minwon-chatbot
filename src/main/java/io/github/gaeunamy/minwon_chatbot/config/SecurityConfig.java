@@ -36,7 +36,9 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/admin.html", true)
                         .failureHandler((request, response, exception) -> {
                             String username = request.getParameter("username");
-                            response.sendRedirect("/login.html?error=true&username=" + username);
+                            // 한글 아이디 깨짐 방지를 위해 UTF-8 인코딩 추가
+                            String encodedUsername = java.net.URLEncoder.encode(username, java.nio.charset.StandardCharsets.UTF_8.toString());
+                            response.sendRedirect("/login.html?error=true&username=" + encodedUsername);
                         })
                         .permitAll()
                 )
