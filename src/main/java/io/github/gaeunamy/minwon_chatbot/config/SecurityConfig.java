@@ -1,5 +1,6 @@
 package io.github.gaeunamy.minwon_chatbot.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
+    @Value("${chatbot.admin.username}")
+    private String adminUsername;
+
+    @Value("${chatbot.admin.password}")
+    private String adminPassword;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,8 +52,8 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
         UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin1234"))
+                .username(adminUsername)
+                .password(passwordEncoder().encode(adminPassword))
                 .roles("ADMIN")
                 .build();
         return new InMemoryUserDetailsManager(admin);
