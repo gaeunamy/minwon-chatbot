@@ -22,7 +22,7 @@
   - 직관적인 Tab UI를 통해 승인된 FAQ와 승인 대기 중인 항목을 분리하여 관리
 
 - **API 명세서 자동화 및 전역 예외 처리**
-  - `Swagger`를 도입하여 프론트엔드와의 협업을 위한 API 명세서 자동 생성
+  - `Swagger`를 도입하여 프론트엔드와의 협업을 위한 API 명세서를 자동 생성
   - `@RestControllerAdvice`를 활용해 일관된 에러 응답(JSON) 규격(Global Exception Handling) 적용
 
 <br/>
@@ -56,7 +56,7 @@
 <div markdown="1">
 <br>
 
-- **문제:** AI가 생성한 검증되지 않은 답변이 공공기관 FAQ에 바로 등록될 경우, 잘못된 정보가 확산될 위험성 존재.
+- **문제:** AI가 생성한 검증되지 않은 답변이 공공기관 FAQ에 바로 등록될 경우, 잘못된 정보(할루시네이션)가 확산될 위험성 존재.
 - **해결:** `Faq` 엔티티에 `FaqStatus` Enum(APPROVED, PENDING)을 도입. AI의 답변은 무조건 `PENDING`으로 저장하고, 관리자 페이지에서 리뷰 후 `APPROVED`로 변경해야만 정식 데이터로 사용되도록 프로세스를 개선함.
 </div>
 </details>
@@ -71,10 +71,20 @@
 </div>
 </details>
 
+<details>
+<summary><strong>3. Spring Security 리다이렉트 시 한글 깨짐 현상 해결</strong></summary>
+<div markdown="1">
+<br>
+
+- **문제:** 로그인 실패 시 한글 아이디가 URL 파라미터로 리다이렉트될 때 브라우저 인코딩 오류로 문자가 깨지는 현상 발생.
+- **해결:** `failureHandler`에서 `java.net.URLEncoder`를 사용해 사용자명을 UTF-8로 인코딩하여 전달하도록 수정. 실패 후에도 입력했던 한글 아이디가 로그인 창에 정상적으로 유지되도록 안정성을 확보함.
+</div>
+</details>
+
 <br/>
 
 ## 🔧 Stack
-- **Backend**: Java 21, Spring Boot 3.x, Spring Data JPA, Spring Security
+- **Backend**: Java 21, Spring Boot 3.2.5, Spring Data JPA, Spring Security
 - **Frontend**: HTML5, CSS3, Vanilla JS
 - **Database**: MySQL
 - **AI & NLP**: Spring AI (OpenAI API), Komoran (한국어 형태소 분석기)
