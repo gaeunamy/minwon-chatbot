@@ -98,22 +98,55 @@ nav a:hover { color: #1a2a44; }
     min-height: 400px; /* 화면이 너무 작아져도 최소한의 높이는 유지 */
     border: none;
     overflow-y: auto;  /* 대화 내용이 많아지면 내부 스크롤 생성 */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* 말풍선 디자인 개선 */
+.message {
+    display: flex;
+    flex-direction: column;
+}
+
+.message.user {
+    align-items: flex-end;
+}
+
+.message.bot {
+    align-items: flex-start;
+}
+
+.message.bot .name {
+    padding-left: 1px;
+}
+
+.message .name {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+.message.user .name {
+    text-align: right;
+    padding-right: 1px;
+}
+
 .message .bubble {
-    max-width: 80%;
+    max-width: 70%;
     padding: 12px 18px;
     font-size: 14px;
     line-height: 1.5;
+    word-wrap: break-word;
 }
 
 .message.user .bubble {
-    background-color: #1a2a44;
-    color: white;
+    background-color: #ffffff;
+    color: #1a2a44;
+    border: 1.5px solid #1a2a44;
     border-radius: 18px 18px 2px 18px;
 }
-
 .message.bot .bubble {
     background-color: #f1f5f9;
     color: #334155;
