@@ -8,6 +8,7 @@ function loadFaqs() {
 
             data.forEach((faq, index) => {
                 const tr = document.createElement('tr');
+                tr.setAttribute('data-id', faq.id);
                 tr.innerHTML = `
                     <td>${index + 1}</td>
                     <td>${faq.question}</td>
@@ -46,16 +47,32 @@ function createFaq() {
 
 // FAQ 수정
 function editFaq(id, question, answer) {
-    const newQuestion = prompt('질문 수정', question);
-    if (!newQuestion) return;
+    const row = document.querySelector(`tr[data-id="${id}"]`);
 
-    const newAnswer = prompt('답변 수정', answer);
-    if (!newAnswer) return;
+    row.innerHTML = `
+        <td>${row.cells[0].textContent}</td>
+        <td><input type="text" id="editQuestion-${id}" value="${question}" style="width:100%; padding:6px; border:1px solid #d0d8e4; border-radius:4px;"/></td>
+        <td><textarea id="editAnswer-${id}" style="width:100%; padding:6px; border:1px solid #d0d8e4; border-radius:4px; height:60px;">${answer}</textarea></td>
+        <td>
+            <button class="btn-edit" onclick="saveEdit(${id})">저장</button>
+            <button class="btn-delete" onclick="loadFaqs()">취소</button>
+        </td>
+    `;
+}
+
+function saveEdit(id) {
+    const question = document.getElementById(`editQuestion-${id}`).value.trim();
+    const answer = document.getElementById(`editAnswer-${id}`).value.trim();
+
+    if (!question || !answer) {
+        alert('질문과 답변을 모두 입력하세요.');
+        return;
+    }
 
     fetch(`/api/faq/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question: newQuestion, answer: newAnswer })
+        body: JSON.stringify({ question, answer })
     })
     .then(() => loadFaqs());
 }
